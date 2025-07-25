@@ -1,0 +1,167 @@
+/* === BODY with animated gradient and floating particles === */
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: linear-gradient(-75deg, #1d2b64, #f8cdda, #283c86, #45a247);
+    background-size: 400% 400%;
+    animation: gradientFlow 12s ease infinite;
+    position: relative;
+}
+
+@keyframes gradientFlow {
+    0% {
+        background-position: 0% 50%;
+    }
+
+    50% {
+        background-position: 100% 50%;
+    }
+
+    100% {
+        background-position: 0% 50%;
+    }
+}
+
+body::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 200%;
+    height: 200%;
+    background-image: radial-gradient(white 1px, transparent 1px);
+    background-size: 40px 40px;
+    animation: moveParticles 60s linear infinite;
+    opacity: 0.07;
+    z-index: 1;
+}
+
+@keyframes moveParticles {
+    from {
+        transform: translate(0, 0);
+    }
+
+    to {
+        transform: translate(-50%, -50%);
+    }
+}
+
+/* === CONVERTER CARD === */
+.container {
+    backdrop-filter: blur(15px);
+    background: rgba(0, 0, 0, 0.3);
+    padding: 2rem;
+    border-radius: 1.5rem;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.25);
+    width: 400px;
+    text-align: center;
+    color: #ffffff;
+    z-index: 2;
+}
+
+h1 {
+    margin-bottom: 1.5rem;
+    font-size: 1.8rem;
+}
+
+input {
+    padding: 0.7rem;
+    border: none;
+    border-radius: 8px;
+    width: 80%;
+    margin-bottom: 1rem;
+    font-size: 1rem;
+}
+
+.selectors {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    margin-bottom: 1rem;
+}
+
+select {
+    padding: 0.5rem;
+    border-radius: 6px;
+    border: none;
+    font-size: 1rem;
+}
+
+button {
+    padding: 0.5rem 0.7rem;
+    font-size: 1.2rem;
+    border: none;
+    border-radius: 6px;
+    background-color: #4facfe;
+    color: white;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+button:hover {
+    background-color: #00f2fe;
+}
+
+.convert-btn {
+    margin-top: 1rem;
+    padding: 0.7rem 1.5rem;
+    font-weight: bold;
+    font-size: 1rem;
+}
+
+.conversion-display {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+    margin-top: 1rem;
+    font-size: 1.4rem;
+}
+
+.direction-arrow {
+    font-size: 2.4rem;
+    font-weight: bold;
+    color: #4facfe;
+    transition: all 0.3s ease;
+}
+
+.result-text {
+    margin-top: 1rem;
+    font-size: 1.2rem;
+    font-weight: 600;
+}
+@media (max-width: 480px) {
+    .container {
+        width: 90%;
+        padding: 1.5rem;
+        font-size: 0.9rem;
+    }
+
+    .selectors {
+        flex-direction: column;
+        gap: 0.8rem;
+    }
+
+    select,
+    input,
+    .convert-btn {
+        width: 100%;
+    }
+
+    .conversion-display {
+        font-size: 1.2rem;
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+
+    .direction-arrow {
+        font-size: 2rem;
+    }
+}

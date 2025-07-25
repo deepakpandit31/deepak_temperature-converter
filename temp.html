@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Temperature Converter</title>
+    <link rel="stylesheet" href="style.css" />
+</head>
+
+<body>
+    <div class="container">
+        <h1>Temperature Converter 🌡️</h1>
+
+        <input type="number" id="temperatureInput" placeholder="Enter temperature" />
+
+        <div class="selectors">
+            <select id="fromUnit">
+                <option value="celsius">Celsius (°C)</option>
+                <option value="fahrenheit">Fahrenheit (°F)</option>
+            </select>
+
+            <button onclick="swapUnits()" title="Swap Units">🔁</button>
+
+            <select id="toUnit">
+                <option value="fahrenheit">Fahrenheit (°F)</option>
+                <option value="celsius">Celsius (°C)</option>
+            </select>
+        </div>
+
+        <div class="conversion-display">
+            <span id="fromUnitDisplay">°C</span>
+            <div class="direction-arrow">→</div>
+            <span id="toUnitDisplay">°F</span>
+        </div>
+
+        <button class="convert-btn" onclick="convertTemp()">Convert</button>
+
+        <div id="result" class="result-text"></div>
+    </div>
+
+    <script>
+        document.getElementById("fromUnit").addEventListener("change", updateDirectionDisplay);
+        document.getElementById("toUnit").addEventListener("change", updateDirectionDisplay);
+
+        function convertTemp() {
+            const tempInput = parseFloat(document.getElementById('temperatureInput').value);
+            const fromUnit = document.getElementById('fromUnit').value;
+            const toUnit = document.getElementById('toUnit').value;
+            let result = "";
+
+            if (isNaN(tempInput)) {
+                result = "Please enter a valid number.";
+            } else if (fromUnit === toUnit) {
+                result = `${tempInput.toFixed(2)}° remains the same in ${toUnit}.`;
+            } else if (fromUnit === "celsius" && toUnit === "fahrenheit") {
+                result = `${((tempInput * 9) / 5 + 32).toFixed(2)}°F`;
+            } else if (fromUnit === "fahrenheit" && toUnit === "celsius") {
+                result = `${(((tempInput - 32) * 5) / 9).toFixed(2)}°C`;
+            }
+
+            document.getElementById("result").textContent = result;
+        }
+
+        function swapUnits() {
+            const from = document.getElementById("fromUnit");
+            const to = document.getElementById("toUnit");
+            [from.value, to.value] = [to.value, from.value];
+            updateDirectionDisplay();
+        }
+
+        function updateDirectionDisplay() {
+            const fromUnit = document.getElementById("fromUnit").value;
+            const toUnit = document.getElementById("toUnit").value;
+            const fromDisplay = document.getElementById("fromUnitDisplay");
+            const toDisplay = document.getElementById("toUnitDisplay");
+            const arrow = document.querySelector(".direction-arrow");
+
+            fromDisplay.style.transform = toDisplay.style.transform = arrow.style.transform = "scale(0.8)";
+            setTimeout(() => {
+                fromDisplay.textContent = fromUnit === "celsius" ? "°C" : "°F";
+                toDisplay.textContent = toUnit === "celsius" ? "°C" : "°F";
+                arrow.textContent = (fromUnit === "celsius" && toUnit === "fahrenheit") ? "→" :
+                    (fromUnit === "fahrenheit" && toUnit === "celsius") ? "←" : "→";
+
+                fromDisplay.style.transform = toDisplay.style.transform = arrow.style.transform = "scale(1)";
+            }, 150);
+        }
+
+        window.onload = updateDirectionDisplay;
+    </script>
+</body>
+
+</html>
